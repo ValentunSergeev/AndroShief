@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Recipies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recipies.each do |recipy| %>
+      <tr>
+        <td><%= recipy.name %></td>
+        <td><%= recipy.description %></td>
+        <td><%= link_to 'Show', recipy %></td>
+        <td><%= link_to 'Edit', edit_recipy_path(recipy) %></td>
+        <td><%= link_to 'Destroy', recipy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Recipy', new_recipy_path %>
