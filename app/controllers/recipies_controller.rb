@@ -1,5 +1,6 @@
 class RecipiesController < ApplicationController
   before_action :set_recipy, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /recipies
   # GET /recipies.json
