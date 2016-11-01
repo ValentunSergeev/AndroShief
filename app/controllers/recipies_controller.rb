@@ -27,7 +27,6 @@ class RecipiesController < ApplicationController
   # POST /recipies.json
   def create
     @recipy = Recipy.new(recipy_params)
-
     respond_to do |format|
       if @recipy.save
         format.html { redirect_to @recipy, notice: 'Recipy was successfully created.' }
@@ -71,6 +70,6 @@ class RecipiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recipy_params
-      params.require(:recipy).permit(:name, :description)
+      params.require(:recipy).permit(:name, :description, :main_photo)
     end
 end
