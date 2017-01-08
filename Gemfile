@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org' #https not work on my pc
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -40,7 +40,7 @@ gem 'omniauth' # required for devise_token_auth
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
+  gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw] 
   gem 'sqlite3'
 end
 
