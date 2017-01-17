@@ -1,5 +1,5 @@
 class RecipiesController < ApplicationController
-  before_action :set_recipy, only: [:show, :edit, :update, :destroy]
+  before_action :set_recipy, only: [:show, :edit, :update, :destroy, :like]
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!
 
@@ -62,14 +62,20 @@ class RecipiesController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_recipy
-      @recipy = Recipy.find(params[:id])
-    end
+  def like
+    user = current_user
+    current_user.cookbook.recipies << @recipy unless current_user.cookbook.recipies.include? (@recipy)
+    render json: { status: 'ok'}, status: 200
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def recipy_params
-      params.require(:recipy).permit(:name, :description, :main_photo)
-    end
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_recipy
+    @recipy = Recipy.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def recipy_params
+    params.require(:recipy).permit(:name, :description, :main_photo)
+  end
 end

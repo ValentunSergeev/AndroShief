@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
-  resources :recipies
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+    registrations:      'overrides/registrations',
+    sessions:           'overrides/sessions'
+  }
+  resources :recipies do
+    get 'like', on: :member
+  end
+
+  get '/cookbook', to: 'application#show_cookbook', as: :cookbook
+
   root 'recipies#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
