@@ -7,10 +7,7 @@ class ApplicationController < ActionController::Base
 
 
 	def show_cookbook
-		render json: {
-				status: 'success',
-				cookbook: current_user.cookbook.recipies.as_json
-			}
+		render :json => current_user.cookbook.recipies.as_json
 	end
   protected
 
