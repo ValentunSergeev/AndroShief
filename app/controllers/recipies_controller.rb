@@ -1,5 +1,5 @@
 class RecipiesController < ApplicationController
-  before_action :set_recipy, only: [:show, :edit, :update, :destroy, :like]
+  before_action :set_recipy, only: [:show, :edit, :update, :destroy, :like, :dislike]
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!
 
@@ -63,9 +63,23 @@ class RecipiesController < ApplicationController
   end
 
   def like
-    user = current_user
-    current_user.cookbook.recipies << @recipy unless current_user.cookbook.recipies.include? (@recipy)
-    render json: { status: 'ok'}, status: 200
+    unless current_user.cookbook.recipies.include?(@recipy)
+      current_user.cookbook.recipies << @recipy
+      @recipy.increment!(:likes_count)
+      render json: {status: 'ok'}, status: 200
+    else
+      render json: {status: 'unprocessable_entity'}, status: :unprocessable_entity
+    end
+  end
+
+  def dislike
+    if current_user.cookbook.recipies.include?(@recipy)
+      current_user.cookbook.recipies -= [@recipy]
+      @recipy.decrement!(:likes_count)
+      render json: {status: 'ok'}, status: 200
+    else
+      render json: {status: 'unprocessable_entity'}, status: :unprocessable_entity
+    end
   end
 
   private

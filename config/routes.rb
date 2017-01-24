@@ -4,7 +4,10 @@ Rails.application.routes.draw do
     sessions:           'overrides/sessions'
   }
   resources :recipies do
-    get 'like', on: :member
+    member do
+      get 'like'
+      get 'dislike'
+    end
   end
 
   get '/cookbook', to: 'application#show_cookbook', as: :cookbook
