@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     registrations:      'overrides/registrations',
     sessions:           'overrides/sessions'
   }
+
+  mount_devise_token_auth_for 'Admin', at: 'admin_auth', skip: [:registrations]
+
+
   resources :recipies, :defaults => { :format => :json } do
     member do
       get 'like'

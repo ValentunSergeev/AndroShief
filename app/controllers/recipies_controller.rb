@@ -1,7 +1,8 @@
 class RecipiesController < ApplicationController
   before_action :set_recipy, only: [:show, :edit, :update, :destroy, :like, :dislike]
   skip_before_action :verify_authenticity_token
-  before_action :authenticate_user!
+  devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!
 
   # GET /recipies
   # GET /recipies.json
@@ -27,7 +28,7 @@ class RecipiesController < ApplicationController
   # POST /recipies.json
   def create
     @recipy = Recipy.new(recipy_params)
-    @recipy.user = current_user
+    @recipy.user = current_user unless admin_signed_in?
     if @recipy.save
       render :show, status: :ok, location: @recipy
     else
