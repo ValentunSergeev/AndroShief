@@ -3,14 +3,14 @@ Rails.application.routes.draw do
     registrations:      'overrides/registrations',
     sessions:           'overrides/sessions'
   }
-  resources :recipies do
+  resources :recipies, :defaults => { :format => :json } do
     member do
       get 'like'
       get 'dislike'
     end
   end
 
-  get '/cookbook', to: 'application#show_cookbook', as: :cookbook
+  get '/cookbook', to: 'application#cookbook', as: :cookbook, :defaults => { :format => :json }
 
   root 'recipies#index'
   # The priority is based upon order of creation: first created -> highest priority.

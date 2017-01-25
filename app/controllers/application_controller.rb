@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
 	before_action :authenticate_user!, only: [:show_cookbook]
 
 
-	def show_cookbook
-		render :json => current_user.cookbook.recipies.as_json
+	def cookbook
+		@recipies = current_user.cookbook.recipies
 	end
   protected
 

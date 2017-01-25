@@ -27,28 +27,21 @@ class RecipiesController < ApplicationController
   # POST /recipies.json
   def create
     @recipy = Recipy.new(recipy_params)
-    respond_to do |format|
-      if @recipy.save
-        format.html { redirect_to @recipy, notice: 'Recipy was successfully created.' }
-        format.json { render :show, status: :created, location: @recipy }
-      else
-        format.html { render :new }
-        format.json { render json: @recipy.errors, status: :unprocessable_entity }
-      end
+    @recipy.user = current_user
+    if @recipy.save
+      render :show, status: :ok, location: @recipy
+    else
+      render json: @recipy.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /recipies/1
   # PATCH/PUT /recipies/1.json
   def update
-    respond_to do |format|
-      if @recipy.update(recipy_params)
-        format.html { redirect_to @recipy, notice: 'Recipy was successfully updated.' }
-        format.json { render :show, status: :ok, location: @recipy }
-      else
-        format.html { render :edit }
-        format.json { render json: @recipy.errors, status: :unprocessable_entity }
-      end
+    if @recipy.update(recipy_params)
+      render :show, status: :ok, location: @recipy
+    else
+      render json: @recipy.errors, status: :unprocessable_entity
     end
   end
 
@@ -56,10 +49,7 @@ class RecipiesController < ApplicationController
   # DELETE /recipies/1.json
   def destroy
     @recipy.destroy
-    respond_to do |format|
-      format.html { redirect_to recipies_url, notice: 'Recipy was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   def like
