@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::Base
 	include DeviseTokenAuth::Concerns::SetUserByToken
 	protect_from_forgery with: :null_session
-	
-	devise_token_auth_group :member, contains: [:user, :admin]
 	before_action :configure_permitted_parameters, if: :devise_controller?
-	before_action :authenticate_member!, only: [:show_cookbook]
+	devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!, only: [:cookbook]
 
 
 	def cookbook

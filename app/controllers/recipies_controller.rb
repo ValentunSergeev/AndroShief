@@ -18,6 +18,7 @@ class RecipiesController < ApplicationController
   # GET /recipies/new
   def new
     @recipy = Recipy.new
+    @recipy.steps.build
   end
 
   # GET /recipies/1/edit
@@ -28,7 +29,7 @@ class RecipiesController < ApplicationController
   # POST /recipies.json
   def create
     @recipy = Recipy.new(recipy_params)
-    @recipy.user = current_user unless admin_signed_in?
+    @recipy.user = current_user || current_admin
     if @recipy.save
       render :show, status: :ok, location: @recipy
     else
@@ -49,6 +50,7 @@ class RecipiesController < ApplicationController
   # DELETE /recipies/1
   # DELETE /recipies/1.json
   def destroy
+    @recipy.cookbooks.each { |cookbook| cookbook.recipies -= [@recipy] }
     @recipy.destroy
     head :no_content
   end
@@ -81,6 +83,6 @@ class RecipiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def recipy_params
-    params.require(:recipy).permit(:name, :description, :main_photo)
+    params.require(:recipy).permit(:name, :description, :main_photo, steps_attributes: [:name, :description, :image])
   end
 end
