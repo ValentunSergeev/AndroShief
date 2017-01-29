@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128101054) do
+ActiveRecord::Schema.define(version: 20170129091140) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -57,6 +57,21 @@ ActiveRecord::Schema.define(version: 20170128101054) do
 
   add_index "cookbooks_recipies", ["cookbook_id"], name: "index_cookbooks_recipies_on_cookbook_id"
   add_index "cookbooks_recipies", ["recipy_id"], name: "index_cookbooks_recipies_on_recipy_id"
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string   "name"
+    t.text     "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ingredients_recipies", id: false, force: :cascade do |t|
+    t.integer "ingredient_id"
+    t.integer "recipy_id"
+  end
+
+  add_index "ingredients_recipies", ["ingredient_id"], name: "index_ingredients_recipies_on_ingredient_id"
+  add_index "ingredients_recipies", ["recipy_id"], name: "index_ingredients_recipies_on_recipy_id"
 
   create_table "recipies", force: :cascade do |t|
     t.string   "name"

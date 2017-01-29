@@ -7,16 +7,20 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'Admin', at: 'admin_auth', skip: [:registrations]
 
 
-  resources :recipies, :defaults => { :format => :json } do
+  resources :recipies, defaults: { format: :json } do
     member do
       get 'like'
       get 'dislike'
     end
   end
 
-  get '/cookbook', to: 'application#cookbook', as: :cookbook, :defaults => { :format => :json }
+  resources :ingredients, defaults: { format: :json }
 
-  root 'recipies#index'
+  root 'recipies#index', defaults: { format: :json }
+
+  get '/cookbook', to: 'application#cookbook', as: :cookbook, defaults: { format: :json }
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
