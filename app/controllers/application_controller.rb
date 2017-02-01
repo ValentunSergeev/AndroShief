@@ -5,10 +5,11 @@ class ApplicationController < ActionController::Base
 	devise_token_auth_group :member, contains: [:user, :admin]
   before_action :authenticate_member!, only: [:cookbook]
 
-
 	def cookbook
-		@recipies = current_user.cookbook.recipies
+		@recipies = current_user.cookbook.recipies.paginate(page: request.headers["Page"] || 1,
+                                per_page: request.headers["Per-Page"] || 10)
 	end
+
   protected
 
   def configure_permitted_parameters
