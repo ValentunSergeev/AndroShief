@@ -84,6 +84,14 @@ class RecipiesController < ApplicationController
     end
   end
 
+  def search
+    @recipies = Recipy.search(params[:search])
+    render json: {
+      status: "success",
+      recipies: @recipies.as_json(only: [:name])
+    }
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_recipy

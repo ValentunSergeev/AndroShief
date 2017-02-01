@@ -12,6 +12,10 @@ Rails.application.routes.draw do
       get 'like'
       get 'dislike'
     end
+
+    collection do
+      post 'search'
+    end
   end
 
   resources :ingredients, defaults: { format: :json } do
