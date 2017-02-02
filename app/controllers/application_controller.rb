@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 
 	def cookbook
 		@recipies = current_user.cookbook.recipies.paginate(page: request.headers["Page"] || 1,
-                                per_page: request.headers["Per-Page"] || 10)
+		                                                    per_page: request.headers["Per-Page"] || 10)
+		render "recipies/index"
 	end
 
   protected

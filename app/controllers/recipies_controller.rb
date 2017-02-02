@@ -30,6 +30,7 @@ class RecipiesController < ApplicationController
   # POST /recipies.json
   def create
     @recipy = Recipy.new(recipy_params)
+
     params[:recipy][:ingredients].each do |e|
       @ingredient = Ingredient.find_by name: e
       if @ingredient.nil?
@@ -39,7 +40,9 @@ class RecipiesController < ApplicationController
         @recipy.ingredients << @ingredient
       end
     end
+
     @recipy.user = current_user || current_admin
+
     if @recipy.save
       render :show, status: :ok, location: @recipy
     else

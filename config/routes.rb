@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     collection do
       post 'search'
     end
+
+    resources :comments, defaults: { format: :json }
   end
 
   resources :ingredients, defaults: { format: :json } do

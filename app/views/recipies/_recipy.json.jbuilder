@@ -7,5 +7,3 @@ json.author do
     json.name recipy.user.name
     json.small_image recipy.user.small_image
 end
-
-json.url recipy_url(recipy, format: :json)
