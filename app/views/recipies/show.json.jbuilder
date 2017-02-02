@@ -9,7 +9,3 @@ end
 json.ingredients(@recipy.ingredients) do |ingredient|
   json.partial! "ingredients/ingredient", ingredient: ingredient
 end
-
-json.comments(@recipy.comments) do |comment|
-  json.partial! "comments/comment", comment: comment
-end

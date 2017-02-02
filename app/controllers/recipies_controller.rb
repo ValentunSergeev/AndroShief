@@ -7,8 +7,7 @@ class RecipiesController < ApplicationController
   # GET /recipies
   # GET /recipies.json
   def index
-    @recipies = Recipy.paginate(page: request.headers["Page"] || 1,
-                                per_page: request.headers["Per-Page"] || 10)
+    @recipies = Recipy.paginate(paginate_params)
   end
 
   # GET /recipies/1

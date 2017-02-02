@@ -3,28 +3,21 @@ class CommentsController < ApplicationController
   devise_token_auth_group :member, contains: [:user, :admin]
   before_action :authenticate_member!
 
-  # GET /ingredients
-  # GET /ingredients.json
   def index
-    @comments = Comment.all
+    @recipy = Recipy.find(params[:recipy_id])
+    @comments = @recipy.comments.paginate(paginate_params)
   end
 
-  # GET /ingredients/1
-  # GET /ingredients/1.json
   def show
   end
 
-  # GET /ingredients/new
   def new
     @comment = Comment.new
   end
 
-  # GET /ingredients/1/edit
   def edit
   end
 
-  # POST /ingredients
-  # POST /ingredients.json
   def create
     @recipy = Recipy.find(params[:recipy_id])
     @comment = @recipy.comments.create(comment_params)
@@ -36,8 +29,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /ingredients/1
-  # PATCH/PUT /ingredients/1.json
   def update
     if @comment.update(ingredient_params)
       render :show, status: :ok, location: @comment
@@ -46,8 +37,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /ingredients/1
-  # DELETE /ingredients/1.json
   def destroy
     @comment.destroy
     format.json  head :no_content
