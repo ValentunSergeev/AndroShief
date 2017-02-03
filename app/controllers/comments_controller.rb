@@ -21,9 +21,9 @@ class CommentsController < ApplicationController
   def create
     @recipy = Recipy.find(params[:recipy_id])
     @comment = @recipy.comments.create(comment_params)
-    @comment.user = current_user || current_admin
+    @comment.user = current_user || currsssent_admin
     if @comment.save
-      render "recipies/show"
+      render "comments/show"
     else
       render json: @comment.errors, status: :unprocessable_entity
     end

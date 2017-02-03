@@ -40,6 +40,16 @@ class RecipiesController < ApplicationController
       end
     end
 
+    params[:recipy][:categories].each do |e|
+      @category = Category.find_by name: e
+      if @category.nil?
+        render json: {status: 'Category not found'}, status: :unprocessable_entity
+        return
+      else
+        @recipy.categories << @category
+      end
+    end
+
     @recipy.user = current_user || current_admin
 
     if @recipy.save
@@ -89,10 +99,6 @@ class RecipiesController < ApplicationController
 
   def search
     @recipies = Recipy.search(params[:search])
-    render json: {
-      status: "success",
-      recipies: @recipies.as_json(only: [:name])
-    }
   end
 
   private

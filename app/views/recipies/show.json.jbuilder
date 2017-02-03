@@ -9,3 +9,7 @@ end
 json.ingredients(@recipy.ingredients) do |ingredient|
   json.partial! "ingredients/ingredient", ingredient: ingredient
 end
+
+json.categories(@recipy.categories) do |category|
+  json.name category.name
+end

@@ -26,6 +26,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :categories, defaults: { format: :json } do
+
+    collection do
+      post 'search'
+    end
+  end
+
   root 'recipies#index', defaults: { format: :json }
 
   get '/cookbook', to: 'application#cookbook', as: :cookbook, defaults: { format: :json }
