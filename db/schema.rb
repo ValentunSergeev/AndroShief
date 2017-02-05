@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203122452) do
+ActiveRecord::Schema.define(version: 20170205052808) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -104,10 +104,15 @@ ActiveRecord::Schema.define(version: 20170203122452) do
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.text     "main_photo"
-    t.integer  "likes_count", default: 0
+    t.integer  "likes_count",   default: 0
+    t.integer  "cook_time"
+    t.integer  "calories"
+    t.integer  "proteins"
+    t.integer  "fats"
+    t.integer  "carbohydrates"
   end
 
   add_index "recipies", ["user_id"], name: "index_recipies_on_user_id"
@@ -119,6 +124,7 @@ ActiveRecord::Schema.define(version: 20170203122452) do
     t.integer  "recipy_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "timer"
   end
 
   add_index "steps", ["recipy_id"], name: "index_steps_on_recipy_id"
