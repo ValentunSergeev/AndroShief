@@ -110,6 +110,6 @@ class RecipiesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def recipy_params
     params.require(:recipy).permit(:name, :description, :main_photo, :cook_time, :calories, :proteins,
-                                   :fats, :carbohydrates, steps_attributes: [:name, :description, :image])
+                                   :fats, :carbohydrates, steps_attributes: [:name, :description, :image, :timer])
   end
 end

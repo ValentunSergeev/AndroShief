@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :omniauthable
   include DeviseTokenAuth::Concerns::User
 
+  validates :name, presence: true, uniqueness: true, length: { minimum: 3 }
+
   has_one :cookbook
   has_many :recipies
 end
