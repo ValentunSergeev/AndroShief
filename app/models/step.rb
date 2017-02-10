@@ -1,4 +1,4 @@
-class Step < ActiveRecord::Base
+class Step < ApplicationRecord
   belongs_to :recipy
 
   validates :name, :description, :image, presence: true

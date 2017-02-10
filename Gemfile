@@ -2,8 +2,11 @@ source 'http://rubygems.org' #https not work on my pc
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '5.0'
 #For photos
+
+gem 'puma', '~> 3.0'
+
 gem "flickr-objects"
 
 # Use SCSS for stylesheets
@@ -25,6 +28,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
+gem 'bcrypt', platforms: :ruby
 gem 'devise_token_auth' # Token based authentication for Rails JSON APIs
 gem 'omniauth' # required for devise_token_auth
 
