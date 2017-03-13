@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  devise_token_auth_group :member, contains: [:user, :admin]
-  before_action :authenticate_member!
+  before_action :authenticate_user!
 
   def index
     @recipy = Recipy.find(params[:recipy_id])
@@ -21,7 +20,7 @@ class CommentsController < ApplicationController
   def create
     @recipy = Recipy.find(params[:recipy_id])
     @comment = @recipy.comments.create(comment_params)
-    @comment.user = current_user || currsssent_admin
+    @comment.user = current_user
     if @comment.save
       render "comments/show"
     else

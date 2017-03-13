@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -36,11 +35,10 @@ ActiveRecord::Schema.define(version: 20170205052808) do
     t.text     "tokens"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["email"], name: "index_admins_on_email"
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
   end
-
-  add_index "admins", ["email"], name: "index_admins_on_email"
-  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
-  add_index "admins", ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -52,38 +50,34 @@ ActiveRecord::Schema.define(version: 20170205052808) do
   create_table "categories_recipies", id: false, force: :cascade do |t|
     t.integer "category_id"
     t.integer "recipy_id"
+    t.index ["category_id"], name: "index_categories_recipies_on_category_id"
+    t.index ["recipy_id"], name: "index_categories_recipies_on_recipy_id"
   end
-
-  add_index "categories_recipies", ["category_id"], name: "index_categories_recipies_on_category_id"
-  add_index "categories_recipies", ["recipy_id"], name: "index_categories_recipies_on_recipy_id"
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
-    t.integer  "commentable_id"
     t.string   "commentable_type"
+    t.integer  "commentable_id"
     t.integer  "user_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
-
-  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "cookbooks", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_cookbooks_on_user_id"
   end
-
-  add_index "cookbooks", ["user_id"], name: "index_cookbooks_on_user_id"
 
   create_table "cookbooks_recipies", id: false, force: :cascade do |t|
     t.integer "cookbook_id"
     t.integer "recipy_id"
+    t.index ["cookbook_id"], name: "index_cookbooks_recipies_on_cookbook_id"
+    t.index ["recipy_id"], name: "index_cookbooks_recipies_on_recipy_id"
   end
-
-  add_index "cookbooks_recipies", ["cookbook_id"], name: "index_cookbooks_recipies_on_cookbook_id"
-  add_index "cookbooks_recipies", ["recipy_id"], name: "index_cookbooks_recipies_on_recipy_id"
 
   create_table "ingredients", force: :cascade do |t|
     t.string   "name"
@@ -95,10 +89,9 @@ ActiveRecord::Schema.define(version: 20170205052808) do
   create_table "ingredients_recipies", id: false, force: :cascade do |t|
     t.integer "ingredient_id"
     t.integer "recipy_id"
+    t.index ["ingredient_id"], name: "index_ingredients_recipies_on_ingredient_id"
+    t.index ["recipy_id"], name: "index_ingredients_recipies_on_recipy_id"
   end
-
-  add_index "ingredients_recipies", ["ingredient_id"], name: "index_ingredients_recipies_on_ingredient_id"
-  add_index "ingredients_recipies", ["recipy_id"], name: "index_ingredients_recipies_on_recipy_id"
 
   create_table "recipies", force: :cascade do |t|
     t.string   "name"
@@ -113,9 +106,8 @@ ActiveRecord::Schema.define(version: 20170205052808) do
     t.integer  "proteins"
     t.integer  "fats"
     t.integer  "carbohydrates"
+    t.index ["user_id"], name: "index_recipies_on_user_id"
   end
-
-  add_index "recipies", ["user_id"], name: "index_recipies_on_user_id"
 
   create_table "steps", force: :cascade do |t|
     t.string   "name"
@@ -125,9 +117,8 @@ ActiveRecord::Schema.define(version: 20170205052808) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "timer"
+    t.index ["recipy_id"], name: "index_steps_on_recipy_id"
   end
-
-  add_index "steps", ["recipy_id"], name: "index_steps_on_recipy_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -153,10 +144,9 @@ ActiveRecord::Schema.define(version: 20170205052808) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "small_image"
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
 
 end

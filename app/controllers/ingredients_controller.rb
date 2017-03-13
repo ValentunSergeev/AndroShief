@@ -1,7 +1,6 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
-  devise_token_auth_group :member, contains: [:user, :admin]
-  before_action :authenticate_member!
+  before_action :authenticate_user!
 
   # GET /ingredients
   # GET /ingredients.json

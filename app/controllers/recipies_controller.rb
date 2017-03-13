@@ -1,8 +1,7 @@
 class RecipiesController < ApplicationController
   before_action :set_recipy, only: [:show, :edit, :update, :destroy, :like, :dislike]
   skip_before_action :verify_authenticity_token
-  devise_token_auth_group :member, contains: [:user, :admin]
-  before_action :authenticate_member!
+  before_action :authenticate_user!
 
   # GET /recipies
   # GET /recipies.json
@@ -50,7 +49,7 @@ class RecipiesController < ApplicationController
       end
     end
 
-    @recipy.user = current_user || current_admin
+    @recipy.user = current_user
 
     if @recipy.save
       render :show, status: :ok, location: @recipy

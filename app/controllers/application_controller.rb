@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
 	include ApplicationHelper
 	protect_from_forgery with: :null_session
 	before_action :configure_permitted_parameters, if: :devise_controller?
-	devise_token_auth_group :member, contains: [:user, :admin]
-  before_action :authenticate_member!, only: [:cookbook]
+  before_action :authenticate_user!, only: [:cookbook]
 	respond_to :json
 
 	def cookbook
@@ -15,6 +14,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :image])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :image, :small_image])
   end
 end
